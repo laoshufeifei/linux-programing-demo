@@ -1,5 +1,4 @@
-#include "header.h"
-#include "read_line.h"
+#include "common.h"
 
 int main(int argc, char* argv[])
 {
