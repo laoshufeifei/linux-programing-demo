@@ -69,7 +69,6 @@ int main(int argc, char* argv[])
             snprintf(addrStr, ADDRSTRLEN, "(%s, %s)", host, service);
         else
             snprintf(addrStr, ADDRSTRLEN, "(?UNKNOWN?)");
-        printf("connection from %s\n", addrStr);
 
         ssize_t readSize = readLine(cltFd, buffer, g_buffSize);
         if (readSize <= 0)
@@ -78,6 +77,7 @@ int main(int argc, char* argv[])
             close(cltFd);
             continue;
         }
+        printf("connection from %s: %d [%s]\n", addrStr, (int)readSize, buffer);
 
         if (write(cltFd, buffer, strlen(buffer)) != readSize)
             fprintf(stderr, "Error on write");

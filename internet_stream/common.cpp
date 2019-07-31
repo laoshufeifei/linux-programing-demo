@@ -8,8 +8,6 @@
 * See the files COPYING.lgpl-v3 and COPYING.gpl-v3 for details.           *
 \*************************************************************************/
 
-#include <unistd.h>
-#include <errno.h>
 #include "common.h"
 
 /* Read characters from 'fd' until a newline is encountered. If a newline
@@ -75,5 +73,5 @@ ssize_t readLine(int fd, void* buffer, size_t n)
 void fatalError(const char* msg)
 {
     printf("%s\n", msg);
-    exit(1);
+    exit(EXIT_FAILURE);
 }
