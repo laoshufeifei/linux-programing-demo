@@ -9,10 +9,6 @@
 
 #define int64 long long
 
-	// 1 test big file
-	// 2 test pipe file
-	// 3 test select/poll/epoll
-
 int main()
 {
 	printf("size of int is %zd\n", sizeof(int));
@@ -24,7 +20,7 @@ int main()
 
 	// create new file with 774 mode
 	int fd = open("test.txt", O_CREAT | O_TRUNC | O_WRONLY, S_IRWXU | S_IRWXG | S_IROTH);
-	printf("fd is %d, error no. %d\n", fd, errno);
+	printf("fd is %d, errno is %d\n", fd, errno);
 
 	const int onePart = 1024;
 	char buff[onePart];
@@ -40,16 +36,20 @@ int main()
 		ssize_t writeSize = write(fd, buff, onePart);
 		if (writeSize != onePart)
 		{
-			printf("%lld write %zd, error no. %d\n", i, writeSize, errno);
+			printf("%lld write %zd, errno is %d\n", i, writeSize, errno);
 		}
 
 		int64 offSet = (int64)lseek(fd, 0, SEEK_CUR);
 		if (offSet != (i + 1) * onePart)
 		{
-			printf("%lld lseek(%lld) had error error no. %d\n", i, offSet, errno);
+			printf("%lld lseek(%lld) had error, errno is %d\n", i, offSet, errno);
 		}
 		// break;
 	}
 
+	int64 offSet =  (int64)lseek(fd, 10, SEEK_END);
+	printf("offSet is %lld\n", offSet);
+
 	close(fd);
+	return 0;
 }
