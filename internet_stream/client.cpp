@@ -3,7 +3,10 @@
 int main(int argc, char *argv[])
 {
     if (argc < 2 || strcmp(argv[1], "--help") == 0)
+    {
         printf("%s server-host msg...\n", argv[0]);
+        exit(1);
+    }
 
     struct addrinfo hints;
     memset(&hints, 0, sizeof(struct addrinfo));
@@ -35,6 +38,17 @@ int main(int argc, char *argv[])
     freeaddrinfo(result);
     if (rp == NULL)
         fatalError("could not connect socket");
+
+    // get local sock name
+    // struct sockaddr localAddr;
+    // socklen_t addrLen = sizeof(struct sockaddr);
+    // int ret = getsockname(cfd, &localAddr, &addrLen);
+
+    // char host[NI_MAXHOST];
+    // char service[NI_MAXSERV];
+    // ret = getnameinfo((struct sockaddr*)&localAddr, addrLen, host, NI_MAXHOST, service, NI_MAXSERV, 0);
+    // if (ret == 0)
+    //     printf("client is %s:%s\n", host, service);
 
     size_t msgLen = strlen(argv[2]);
     if (write(cfd, argv[2], msgLen) != msgLen)

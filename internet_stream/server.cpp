@@ -2,6 +2,10 @@
 
 int main(int argc, char* argv[])
 {
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
+    printf("Current working dir: %s\n", cwd);
+
     if (signal(SIGPIPE, SIG_IGN) == SIG_ERR)
         fatalError("signal ignore error");
 
@@ -37,13 +41,24 @@ int main(int argc, char* argv[])
         close(lfd);
     }
 
+    freeaddrinfo(result);
     if (rp == NULL)
         fatalError("couldn't bind socket to any address");
 
     if (listen(lfd, BACKLOG) == -1)
         fatalError("listen error");
 
-    freeaddrinfo(result);
+
+
+    struct sockaddr localAddr;
+    socklen_t addrLen1 = sizeof(struct sockaddr);
+    int ret1 = getsockname(lfd, &localAddr, &addrLen1);
+    char host1[NI_MAXHOST];
+    char service1[NI_MAXSERV];
+    ret1 = getnameinfo((struct sockaddr*)&localAddr, addrLen1, host1, NI_MAXHOST, service1, NI_MAXSERV, 0);
+    if (ret == 0)
+        printf("server socket is %s:%s\n", host1, service1);
+
 
 
     socklen_t addrLen = sizeof(struct sockaddr_storage);
@@ -63,6 +78,15 @@ int main(int argc, char* argv[])
             printf("accept error");
             continue;
         }
+
+        // struct sockaddr localAddr;
+        // socklen_t addrLen = sizeof(struct sockaddr);
+        // int ret = getsockname(cltFd, &localAddr, &addrLen);
+        // char host[NI_MAXHOST];
+        // char service[NI_MAXSERV];
+        // ret = getnameinfo((struct sockaddr*)&localAddr, addrLen, host, NI_MAXHOST, service, NI_MAXSERV, 0);
+        // if (ret == 0)
+        //     printf("accept socket is %s:%s\n", host, service);
 
         ret = getnameinfo((struct sockaddr*)&cltAddr, addrLen, host, NI_MAXHOST, service, NI_MAXSERV, 0);
         if (ret == 0)
