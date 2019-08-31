@@ -1,0 +1,45 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558 
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "build server",
+			"command": "/usr/bin/gcc",
+			"args": [
+				"-g",
+				"server.c",
+				"common.c",
+				"-o",
+				"server"
+			],
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "shell",
+			"label": "build client",
+			"command": "/usr/bin/gcc",
+			"args": [
+				"-g",
+				"client.c",
+				"common.c",
+				"-o",
+				"client"
+			],
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}

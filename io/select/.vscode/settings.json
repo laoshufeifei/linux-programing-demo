@@ -1,0 +1,13 @@
+{
+	"files.associations": {
+		"*.in": "makefile",
+		"*.am": "makefile",
+		"CMake*.txt": "cmake",
+		"*.rst": "restructuredtext",
+		"*.cjson": "jsonc",
+		"*.wxss": "css",
+		"*.wxs": "javascript",
+		"*.html": "html",
+		"time.h": "c"
+	}
+}
