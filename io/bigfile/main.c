@@ -83,5 +83,11 @@ int main()
 	offSet =  (int64)lseek(fd, 10, SEEK_SET);
 	printf("offSet is %lld\n", offSet);
 
+	if (fd > 0)
+	{
+		close(fd);
+		remove("test.txt");
+	}
+
 	return 0;
 }
