@@ -2,3 +2,7 @@
 */client
 */a.out
 io/*.txt
+
+a.out
+*.txt
+*.log

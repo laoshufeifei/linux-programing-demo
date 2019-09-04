@@ -65,6 +65,10 @@ static void dirRead(const char* dirPath)
 
 int main(int argc, char** argv)
 {
+	char buffer[512];
+	char* ret = getcwd(buffer, 512);
+	printf("getcwd return is %s, buffer is %s\n", ret, buffer);
+
 	pathTest(argv[0]);
 
 	printf("\n\n");
