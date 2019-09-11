@@ -18,10 +18,10 @@ int main(int argc, char *argv[])
     const char* host = "liudf.com";
     const char* port = "80";
     const char* requestMsg = "HEAD / HTTP/1.1\n"
-        "Host: liudf.com\n"
-        "Accept-Encoding: identity\n"
-        "Transfer-Encoding: identity\n"
-        "\n";
+                            "Host: liudf.com\n"
+                            "Accept-Encoding: identity\n"
+                            "Transfer-Encoding: identity\n"
+                            "\n";
 
     printf("%s", requestMsg);
 
@@ -38,19 +38,19 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    int cfd = 0;
+    int fd = 0;
     struct addrinfo* rp;
     for (rp = result; rp != NULL; rp = rp->ai_next)
     {
-        cfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
-        if (cfd == -1)
+        fd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
+        if (fd == -1)
             continue;
 
-        if (connect(cfd, rp->ai_addr, rp->ai_addrlen) != -1)
+        if (connect(fd, rp->ai_addr, rp->ai_addrlen) != -1)
             break;
 
         printf("connect failed\n");
-        close(cfd);
+        close(fd);
     }
 
     freeaddrinfo(result);
@@ -61,33 +61,35 @@ int main(int argc, char *argv[])
     }
 
     size_t msgLen = strlen(requestMsg);
-    if (write(cfd, requestMsg, msgLen) != msgLen)
+    if (write(fd, requestMsg, msgLen) != msgLen)
     {
         printf("write size != requestMsg length");
         return -1;
     }
 
-    char buffer[1024] = {0,};
+    char ch;
+    char buffer[1024] = {0, };
     for (int i = 0; i < 1024; i++)
     {
-        char ch[1];
-        ssize_t readSize = read(cfd, ch, 1);
+        ssize_t readSize = read(fd, &ch, 1);
         if (readSize < 0)
             break;
+        else if (readSize == 0)
+            continue;
 
-        printf("%c", ch[0]);
-        buffer[i] = ch[0];
+        printf("%c", ch);
+        buffer[i] = ch;
 
-        if (i >= 4)
+        if (i >= 3)
         {
-            if (strncmp(buffer + i - 3, "\r\n\r\n", 4) == 0
-                || strncmp(buffer + i - 1, "\r\r", 2) == 0)
+            if (strncmp(buffer + i - 3, "\r\n\r\n", 4) == 0)
             {
                 break;
             }
         }
     }
 
+    close(fd);
     return 0;
 }
 
