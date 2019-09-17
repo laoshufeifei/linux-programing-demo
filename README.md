@@ -30,11 +30,14 @@ socket:
 TCP/UDP socket
 UNIX domain socket
 
+signal
+
 
 TODO
 =======
 
-signal
+document
+
 time/date
 timer
 memory
