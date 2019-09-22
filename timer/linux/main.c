@@ -12,7 +12,7 @@ static int g_timerValueSec = 3;			// 首次到期时间(秒，下同)
 static int g_timerIntervalSec = 3;		// 间隔时间
 static int g_maxCallbackCount = 10;		// 最多执行几次回调(退出条件)
 
-static ulong g_initTime = 0;
+static uint64 g_initTime = 0;
 static uint64 _getTicks()
 {
 	struct timespec tp;
