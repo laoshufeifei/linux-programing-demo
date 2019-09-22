@@ -13,15 +13,13 @@ LIST
 
 <details>
 <summary>Document <code>TODO</code></summary>
-<br>
 
 * 待完成
 </details>
 
 
-<details>
+<details open>
 <summary>IO </summary>
-<br>
 
 - [x] big file
 - [x] file lock(flock / fctrl)
@@ -36,9 +34,8 @@ LIST
 </details>
 
 
-<details>
+<details open>
 <summary>directory </summary>
-<br>
 
 - [x] dirname / basename / realpath / getcwd
 - [x] opendir / readdir / closedir
@@ -46,27 +43,25 @@ LIST
 </details>
 
 
-<details>
+<details open>
 <summary>socket </summary>
-<br>
+
 - [x] internet datagram / stream
 - [x] UNIX domain datagram / stream
 - [x] simple http client
 </details>
 
 
-<details>
+<details open>
 <summary>signal </summary>
-<br>
 
 - [x] signal
 - [x] sigaction
 </details>
 
 
-<details>
-<summary>time </summary>
-<br>
+<details open>
+<summary>time</summary>
 
 - [x] POSIX (real time and ticks)
 	- [x] clock_gettime / clock_settime
@@ -83,9 +78,8 @@ LIST
 </details>
 
 
-<details>
+<details open>
 <summary>timer </summary>
-<br>
 
 - [x] POSIX
 	- [x] timer_create / timer_delete
@@ -97,35 +91,29 @@ LIST
 
 <details>
 <summary>memory </summary>
-<br>
 
 </details>
 
 
 <details>
 <summary>mmap </summary>
-<br>
 
 </details>
 
 
 <details>
 <summary>thread </summary>
-<br>
 
 </details>
 
 
 <details>
 <summary>process </summary>
-<br>
 
 </details>
 
 
 <details>
 <summary>cmake </summary>
-<br>
 
 </details>
-
