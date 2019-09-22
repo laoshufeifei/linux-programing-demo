@@ -22,6 +22,7 @@ LIST
 	- [x] pwrite
 	- [x] stat
 	- [x] syslog
+	- [x] FILE <==> fd
 - [x] directory
 	- [x] dirname / basename / realpath / getcwd
 	- [x] opendir / readdir / closedir
@@ -42,8 +43,16 @@ LIST
 		- [x] ctime_r / gmtime_r / localtime_r
 		- [x] strftime / strptime
 		- [x] times
-	- [ ] sleep / nanosleep
-- [ ] timer
+	- [x] sleep
+		- [x] sleep / usleep / nanosleep
+		- [x] select / poll / epoll
+		- [x] clock_nanosleep
+- [x] timer
+	- [x] POSIX
+		- [x] timer_create / timer_delete
+		- [x] timer_gettime / timer_settime / timer_getoverrun
+	- [x] Linux
+		- [x] timerfd_create / timerfd_gettime / timerfd_settime
 - [ ] memory
 - [ ] mmap
 - [ ] thread
