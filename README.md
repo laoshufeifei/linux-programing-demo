@@ -11,6 +11,20 @@ README
 LIST
 ==========
 
+<details>
+	<summary>- [x] IO</summary>
+
+	- [x] inotify
+	- [x] select / poll / epoll
+	- [x] pipe
+	- [x] popen
+	- [x] pwrite
+	- [x] stat
+	- [x] syslog
+	- [x] FILE <==> fd
+</details>
+
+
 - [ ] document
 - [x] IO
 	- [x] big file
