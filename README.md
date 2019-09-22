@@ -11,50 +11,109 @@ README
 LIST
 ==========
 
-- [ ] document
-- [x] IO
-	- [x] big file
-	- [x] file lock(flock / fctrl)
-	- [x] inotify
-	- [x] select / poll / epoll
-	- [x] pipe
-	- [x] popen
-	- [x] pwrite
-	- [x] stat
-	- [x] syslog
-	- [x] FILE <==> fd
-- [x] directory
-	- [x] dirname / basename / realpath / getcwd
-	- [x] opendir / readdir / closedir
-	- [x] nftw(file tree walk)
-- [x] socket
-	- [x] internet datagram / stream
-	- [x] UNIX domain datagram / stream
-	- [x] simple http client
+<details>
+<summary>Document <code>TODO</code></summary>
+
+* 待完成
+</details>
+
+
+<details open>
+<summary>IO </summary>
+
+- [x] big file
+- [x] file lock(flock / fctrl)
+- [x] inotify
+- [x] select / poll / epoll
+- [x] pipe
+- [x] popen
+- [x] pwrite
+- [x] stat
+- [x] syslog
+- [x] FILE <==> fd
+</details>
+
+
+<details open>
+<summary>directory </summary>
+
+- [x] dirname / basename / realpath / getcwd
+- [x] opendir / readdir / closedir
+- [x] nftw(file tree walk)
+</details>
+
+
+<details open>
+<summary>socket </summary>
+
+- [x] internet datagram / stream
+- [x] UNIX domain datagram / stream
+- [x] simple http client
+</details>
+
+
+<details open>
+<summary>signal </summary>
+
 - [x] signal
-	- [x] signal
-	- [x] sigaction
-- [x] time
-	- [x] POSIX (real time and ticks)
-		- [x] clock_gettime / clock_settime
-		- [x] clock / getrusage
-	- [x] UNIX (real time and ticks)
-		- [x] gettimeofday / time
-		- [x] ctime_r / gmtime_r / localtime_r
-		- [x] strftime / strptime
-		- [x] times
-	- [x] sleep
-		- [x] sleep / usleep / nanosleep
-		- [x] select / poll / epoll
-		- [x] clock_nanosleep
-- [x] timer
-	- [x] POSIX
-		- [x] timer_create / timer_delete
-		- [x] timer_gettime / timer_settime / timer_getoverrun
-	- [x] Linux
-		- [x] timerfd_create / timerfd_gettime / timerfd_settime
-- [ ] memory
-- [ ] mmap
-- [ ] thread
-- [ ] process
-- [ ] cmake
+- [x] sigaction
+</details>
+
+
+<details open>
+<summary>time</summary>
+
+- [x] POSIX (real time and ticks)
+	- [x] clock_gettime / clock_settime
+	- [x] clock / getrusage
+- [x] UNIX (real time and ticks)
+	- [x] gettimeofday / time
+	- [x] ctime_r / gmtime_r / localtime_r
+	- [x] strftime / strptime
+	- [x] times
+- [x] sleep
+	- [x] sleep / usleep / nanosleep
+	- [x] select / poll / epoll
+	- [x] clock_nanosleep
+</details>
+
+
+<details open>
+<summary>timer </summary>
+
+- [x] POSIX
+	- [x] timer_create / timer_delete
+	- [x] timer_gettime / timer_settime / timer_getoverrun
+- [x] Linux
+	- [x] timerfd_create / timerfd_gettime / timerfd_settime
+</details>
+
+
+<details>
+<summary>memory <code>TODO</code></summary>
+
+</details>
+
+
+<details>
+<summary>mmap <code>TODO</code></summary>
+
+</details>
+
+
+<details>
+<summary>thread <code>TODO</code></summary>
+
+</details>
+
+
+<details>
+<summary>process <code>TODO</code></summary>
+
+</details>
+
+
+<details>
+<summary>cmake <code>TODO</code></summary>
+
+</details>
