@@ -12,17 +12,31 @@ LIST
 ==========
 
 <details>
-	<summary>- [x] IO</summary>
+<summary>IO <code>file</code></summary>
+<br>
 
-	- [x] inotify
-	- [x] select / poll / epoll
-	- [x] pipe
-	- [x] popen
-	- [x] pwrite
-	- [x] stat
-	- [x] syslog
-	- [x] FILE <==> fd
+* 获取文件大小
+* 判断路径是否存在
 </details>
+
+<details>
+<summary>IO <code>file</code></summary>
+<br>
+
+- [x] inotify
+- [x] select / poll / epoll
+- [x] pipe
+- [x] popen
+- [x] pwrite
+- [x] stat
+- [x] syslog
+- [x] FILE <==> fd
+</details>
+
+
+<br>
+<br>
+<br>
 
 
 - [ ] document
