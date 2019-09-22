@@ -37,7 +37,7 @@ static double costTime(void)
     }
 
     // only cost real time
-    sleep(1);
+    usleep(300);
     return 0.;
 }
 
@@ -58,16 +58,6 @@ void costTimeTest()
     printf("stime  is %ld ms\n", ts.tms_stime  * 1000 / g_clockTick);
     printf("cutime is %ld ms\n", ts.tms_cutime * 1000 / g_clockTick);
     printf("cstime is %ld ms\n", ts.tms_cstime * 1000 / g_clockTick);
-
-
-    printf("\n\nuse clock() static info\n");
-    ret = clock();
-    if (ret == (clock_t)-1)
-    {
-        printf("times return -1, errno is %d\n", errno);
-        return;
-    }
-    printf("clock static info(usr + sys) is %ld\n", ret * 1000 / CLOCKS_PER_SEC);
 }
 
 int main(void)

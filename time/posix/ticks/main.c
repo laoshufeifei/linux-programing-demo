@@ -2,9 +2,15 @@
 #include <time.h>
 #include <errno.h>
 #include <unistd.h>
+#include <sys/resource.h>
 
 typedef long long int64;
 typedef unsigned long long uint64;
+
+static uint64 timeval2ms(struct timeval* t)
+{
+	return (uint64)t->tv_sec * 1000 + (uint64)(t->tv_usec / 1000. + 0.5);
+}
 
 static uint64 timespec2MS(struct timespec* tp)
 {
@@ -35,7 +41,7 @@ static double costTime(void)
 	}
 
 	// only cost real time
-	sleep(1);
+	usleep(300);
 	return 0.;
 }
 
@@ -46,21 +52,31 @@ void costTimeTest()
 	// show static info(usr cpu time + sys cpu time)
 	struct timespec tp;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tp);
-	printf("CLOCK_PROCESS_CPUTIME_ID(usr + sys cpu time) is %llu\n", timespec2MS(&tp));
+	printf("CLOCK_PROCESS_CPUTIME_ID(usr + sys) is %llu\n", timespec2MS(&tp));
 
 	clockid_t cId;
 	clock_getcpuclockid(0, &cId);
 	clock_gettime(cId, &tp);
-	printf("clock_getcpuclockid is %llu\n", timespec2MS(&tp));
+	printf("clock_getcpuclockid(usr + sys) is %llu\n", timespec2MS(&tp));
 
-	printf("if you want static sys cpu time, please use times(), see unix/sticks\n");
+	int ret = clock();
+	if (ret == (clock_t)-1)
+	{
+		printf("clock() return -1, errno is %d\n", errno);
+		return;
+	}
+	printf("clock static info(usr + sys) is %ld\n", ret * 1000 / CLOCKS_PER_SEC);
+
+	struct rusage ru;
+	getrusage(RUSAGE_SELF, &ru);
+	printf("RUSAGE_SELF - ru_utime(usr): %llu\n", timeval2ms(&ru.ru_utime));
+	printf("RUSAGE_SELF - ru_stime(sys): %llu\n", timeval2ms(&ru.ru_stime));
 }
 
 int main(void)
 {
 	struct timespec start;
 	clock_gettime(CLOCK_MONOTONIC, &start);
-	// printf("clock_gettime with CLOCK_MONOTONIC timestamp is %llu\n", timespec2MS(&start));
 
 	costTimeTest();
 
