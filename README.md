@@ -31,6 +31,7 @@ LIST
 - [x] stat
 - [x] syslog
 - [x] FILE <==> fd
+- [x] tmpfile
 </details>
 
 
