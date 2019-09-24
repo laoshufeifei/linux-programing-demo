@@ -91,8 +91,13 @@ LIST
 
 
 <details>
-<summary>memory <code>TODO</code></summary>
+<summary>memory </summary>
 
+- [x] basic
+	- [x] alloca / malloc / free
+	- [x] sbrk
+	- [x] memalign / posix_memalign
+- [ ] map file
 </details>
 
 
