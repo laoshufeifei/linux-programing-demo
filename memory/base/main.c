@@ -7,34 +7,7 @@
 
 extern char etext, edata, end;
 
-static void _showAddr()
-{
-    printf("end   is %p\n", &end);
-    printf("edata is %p\n", &edata);
-    printf("etext is %p\n", &etext);
-}
-
-static void _sbrkTest()
-{
-    const int testCount = 1000;
-    void* addrs[testCount];
-
-    printf("before alloc %d * 1024, sbrk return %10p\n", testCount, sbrk(0));
-    for (int i = 0; i < testCount; i++)
-    {
-        void* mem = malloc(1024);
-        addrs[i] = mem;
-    }
-    printf("after  alloc %d * 1024, sbrk return %10p\n", testCount, sbrk(0));
-
-    for (int i = testCount - 1; i >= 0; i--)
-    {
-        free(addrs[i]);
-    }
-    printf("after  free  %d * 1024, sbrk return %10p\n", testCount, sbrk(0));
-}
-
-long long main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     (void)argc;
     (void)argv;
