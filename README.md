@@ -91,25 +91,24 @@ LIST
 
 
 <details>
-<summary>memory <code>TODO</code></summary>
+<summary>memory </summary>
 
+- [x] basic
+	- [x] alloca / malloc / free
+	- [x] sbrk
+	- [x] memalign / posix_memalign
+- [x] map file (shared or private)
 </details>
 
 
 <details>
-<summary>mmap <code>TODO</code></summary>
+<summary>process <code>TODO</code></summary>
 
 </details>
 
 
 <details>
 <summary>thread <code>TODO</code></summary>
-
-</details>
-
-
-<details>
-<summary>process <code>TODO</code></summary>
 
 </details>
 
