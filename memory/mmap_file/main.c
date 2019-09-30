@@ -22,6 +22,7 @@ static int _childFunc(void* addr, size_t mapSize, int sleepTime)
 	printf("\tchange upper case by modify addr\n");
 	sleep(sleepTime);
 
+	// ignore check addr
 	int ret = msync(addr, mapSize, MS_SYNC);
 	if (ret == -1)
 	{
@@ -29,6 +30,7 @@ static int _childFunc(void* addr, size_t mapSize, int sleepTime)
 		return -1;
 	}
 
+	// ignore check addr
 	ret = munmap(addr, mapSize);
 	if (ret == -1)
 	{
@@ -48,20 +50,9 @@ static char* _fileContext(char* fileName)
 	}
 
 	struct stat sb;
-	int ret = fstat(fd, &sb);
-	if (ret == -1)
-	{
-		printf("fstat failed, errno is %d\n", errno);
-		return NULL;
-	}
-
+	fstat(fd, &sb);
 	size_t fileSize = sb.st_size;
 	char* buffer = (char*)malloc(fileSize + 1);
-	if (buffer == NULL)
-	{
-		printf("malloc(%zu) failed, errno is %d\n", fileSize, errno);
-		return NULL;
-	}
 
 	size_t totalReadSize = 0;
 	while (totalReadSize < fileSize)
@@ -70,6 +61,14 @@ static char* _fileContext(char* fileName)
 		if (readSize < 0)
 		{
 			printf("read failed, errno is %d\n", errno);
+			break;
+		}
+		else if (readSize == 0)
+		{
+			if (totalReadSize != fileSize)
+			{
+				printf("read end of file, but totalReadSize(%zu) != fileSize(%zu)\n", totalReadSize, fileSize);
+			}
 			break;
 		}
 		totalReadSize += readSize;
@@ -128,16 +127,24 @@ int main(int argc, char* argv[])
 		printf("fork error\n");
 		return -1;
 	case 0:
+	{
 		printf("\tchild: in\n");
 		_childFunc(addr, mapSize, 2);
-		printf("\tchild: file context is [%s]\n", _fileContext(fileName));
+		char* buff = _fileContext(fileName);
+		printf("\tchild: file context is [%s]\n", buff);
+		free(buff);
 		printf("\tchild: out\n");
 		return 0;
 		break;
+	}
 	default:
-		wait(NULL);
-		printf("parent: file context is [%s]\n", _fileContext(fileName));
-		printf("parent: will exit\n");
+		{
+			wait(NULL);
+			char* buff = _fileContext(fileName);
+			printf("parent: file context is [%s]\n", buff);
+			free(buff);
+			printf("parent: will exit\n");
+		}
 		break;
 	}
 
