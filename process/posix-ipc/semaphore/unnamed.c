@@ -62,7 +62,7 @@ static void* _mapSharedMemory(const char* name, int size, int* openFd, bool* isC
 
 int main()
 {
-	int maxTestCount = 200000000;
+	int maxTestCount = 100000000;
 	const char* mapMame = "unnamed_sem_on_shm";
 
 	// shared memory
@@ -76,7 +76,7 @@ int main()
 	}
 
 	sem_t* sem = (sem_t*)(mapAddress);
-	int* countAddress = (int*)(mapAddress + sizeof(sem_t));
+	int* number = (int*)(mapAddress + sizeof(sem_t));
 
 	if (createNew)
 	{
@@ -100,10 +100,11 @@ int main()
 		for (int i = 0; i < maxTestCount; i++)
 		{
 			sem_wait(sem);
-			(*countAddress)++;
+			(*number)++;
 			sem_post(sem);
 		}
-		printf("creater: finish test, number is %d\n", *countAddress);
+		printf("creater: finish test, number is %d\n", *number);
+		// sem_destroy(sem);
 	}
 	else
 	{
@@ -111,15 +112,10 @@ int main()
 		for (int i = 0; i < maxTestCount; i++)
 		{
 			sem_wait(sem);
-			(*countAddress)++;
+			(*number)++;
 			sem_post(sem);
 		}
-		printf("\treader: finish test, number is %d\n", *countAddress);
-	}
-
-	if (createNew)
-	{
-		sem_destroy(sem);
+		printf("\treader: finish test, number is %d\n", *number);
 	}
 
 	munmap(mapAddress, mapSize);

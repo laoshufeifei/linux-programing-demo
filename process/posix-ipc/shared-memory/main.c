@@ -68,25 +68,25 @@ int main(int argc, char *argv[])
 	{
 		return -1;
 	}
-	int* countAddress = (int*)mapAddress;
+	int* number = (int*)mapAddress;
 
 	if (createNew)
 	{
 		printf("creater: begin test...\n");
 		for (int i = 0; i < maxTestCount; i++)
 		{
-			atomicAddValue(countAddress, 1);
+			atomicAddValue(number, 1);
 		}
-		printf("creater: finish test, number is %d\n", *countAddress);
+		printf("creater: finish test, number is %d\n", *number);
 	}
 	else
 	{
 		printf("\treader: begin test...\n");
 		for (int i = 0; i < maxTestCount; i++)
 		{
-			atomicAddValue(countAddress, 1);
+			atomicAddValue(number, 1);
 		}
-		printf("\treader: finish test, number is %d\n", *countAddress);
+		printf("\treader: finish test, number is %d\n", *number);
 	}
 
 	munmap(mapAddress, mapSize);
