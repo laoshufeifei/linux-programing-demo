@@ -7,6 +7,8 @@
 #include <sys/stat.h>
 #include <semaphore.h>
 
+// gcc main.c -lpthread
+
 static void _printSemValue(sem_t* sem)
 {
 	int value = -1;

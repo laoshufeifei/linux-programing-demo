@@ -2,17 +2,25 @@
 #include <unistd.h>
 #include <errno.h>
 #include <stdbool.h>
-#include <sys/types.h>
 
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <semaphore.h>
 #include <sys/mman.h>
 
-// gcc main.c -lrt
+// gcc main.c -lpthread -lrt
 
-// i++
-#define atomicAddValue __sync_fetch_and_add
-#define atomicSetValue __sync_lock_test_and_set
+static void _printSemValue(sem_t* sem)
+{
+	int value = -1;
+	int ret = sem_getvalue(sem, &value);
+	if (ret == -1)
+	{
+		printf("sem_getvalue failed, errno is %d\n", errno);
+		return;
+	}
+	printf("sem value is %d\n", value);
+}
 
 static void* _mapSharedMemory(const char* name, int size, int* openFd, bool* isCreate)
 {
@@ -23,6 +31,10 @@ static void* _mapSharedMemory(const char* name, int size, int* openFd, bool* isC
 		createNew = false;
 		fd = shm_open(name, O_RDWR, 0666);
 		printf("\treader: open an exist shared memory\n");
+	}
+	else
+	{
+		printf("creater: create a new shared memory\n");
 	}
 	*isCreate = createNew;
 
@@ -45,37 +57,51 @@ static void* _mapSharedMemory(const char* name, int size, int* openFd, bool* isC
 		return NULL;
 	}
 
-	if (createNew)
-	{
-		atomicSetValue((int*)mapAddress, 0);
-		printf("creater: create a new shard memory succeeded, set count as 0\n");
-	}
-
 	return mapAddress;
 }
 
-int main(int argc, char *argv[])
+int main()
 {
 	int maxTestCount = 200000000;
-	const char* mapMame = "test_shared_memory";
+	const char* mapMame = "unnamed_sem_on_shm";
 
 	// shared memory
 	int fd = 0;
 	bool createNew = false;
-	int mapSize = sizeof(int);
-	void* mapAddress = _mapSharedMemory(mapMame, mapSize, &fd, &createNew);
+	int mapSize = sizeof(sem_t) + sizeof(int);
+	char* mapAddress = (char*)_mapSharedMemory(mapMame, mapSize, &fd, &createNew);
 	if (mapAddress == NULL)
 	{
 		return -1;
 	}
-	int* countAddress = (int*)mapAddress;
+
+	sem_t* sem = (sem_t*)(mapAddress);
+	int* countAddress = (int*)(mapAddress + sizeof(sem_t));
+
+	if (createNew)
+	{
+		int pshared = 1; // 0 is for thread; other is for process;
+		int ret = sem_init(sem, pshared, 1);
+		if (ret == -1)
+		{
+			printf("sem_init failed, errno is %d\n", errno);
+			return -1;
+		}
+		else
+		{
+			printf("creater: sem_init as 1 succeeded\n");
+			_printSemValue(sem);
+		}
+	}
 
 	if (createNew)
 	{
 		printf("creater: begin test...\n");
 		for (int i = 0; i < maxTestCount; i++)
 		{
-			atomicAddValue(countAddress, 1);
+			sem_wait(sem);
+			(*countAddress)++;
+			sem_post(sem);
 		}
 		printf("creater: finish test, number is %d\n", *countAddress);
 	}
@@ -84,9 +110,16 @@ int main(int argc, char *argv[])
 		printf("\treader: begin test...\n");
 		for (int i = 0; i < maxTestCount; i++)
 		{
-			atomicAddValue(countAddress, 1);
+			sem_wait(sem);
+			(*countAddress)++;
+			sem_post(sem);
 		}
 		printf("\treader: finish test, number is %d\n", *countAddress);
+	}
+
+	if (createNew)
+	{
+		sem_destroy(sem);
 	}
 
 	munmap(mapAddress, mapSize);
