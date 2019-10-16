@@ -32,6 +32,7 @@ LIST
 - [x] syslog
 - [x] FILE <==> fd
 - [x] tmpfile
+- [x] fifo
 </details>
 
 
@@ -114,6 +115,9 @@ LIST
 
 
 <details>
-<summary>cmake <code>TODO</code></summary>
+<summary>other <code>TODO</code></summary>
 
+- [ ] cmake
+- [ ] libc IO
+- [ ] cpp11 thread
 </details>

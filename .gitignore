@@ -6,3 +6,5 @@ io/*.txt
 a.out
 *.txt
 *.log
+
+.vscode
