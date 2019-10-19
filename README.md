@@ -91,7 +91,7 @@ LIST
 </details>
 
 
-<details>
+<details open>
 <summary>memory </summary>
 
 - [x] basic
@@ -102,9 +102,17 @@ LIST
 </details>
 
 
-<details>
-<summary>process <code>TODO</code></summary>
+<details open>
+<summary>process </summary>
 
+- [x] fork / getpid
+- [x] system-v-ipc
+	- [x] shared-memory
+	- [x] semaphore
+- [x] posix-ipc
+	- [x] shared-memory
+	- [x] semaphore
+	- [x] message-queue
 </details>
 
 
