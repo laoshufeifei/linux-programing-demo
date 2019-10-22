@@ -48,7 +48,7 @@ int main()
             fatalError("accept return -1");
 
         printf("accept new connetion, cfd = %d\n", cfd);
-        int readSize = 0;
+        ssize_t readSize = 0;
         while ((readSize = read(cfd, buff, g_buffSize)) > 0)
         {
             if (write(STDOUT_FILENO, buff, readSize) != readSize)

@@ -57,7 +57,7 @@ static char* _fileContext(char* fileName)
 	size_t totalReadSize = 0;
 	while (totalReadSize < fileSize)
 	{
-		size_t readSize = read(fd, buffer, fileSize - totalReadSize);
+		ssize_t readSize = read(fd, buffer, fileSize - totalReadSize);
 		if (readSize < 0)
 		{
 			printf("read failed, errno is %d\n", errno);

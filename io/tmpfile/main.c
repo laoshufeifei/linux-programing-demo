@@ -12,18 +12,18 @@ static void _writeAndRead(int fd)
     }
 
     char buffer[2] = {'a',};
-    size_t writeSize = write(fd, buffer, 1);
+    ssize_t writeSize = write(fd, buffer, 1);
     if (writeSize != 1)
     {
-        printf("writeSize(%zu) != 1, errno is %d\n", writeSize, errno);
+        printf("writeSize(%zd) != 1, errno is %d\n", writeSize, errno);
     }
 
     lseek(fd, 0, SEEK_SET);
     buffer[0] = 0;
-    size_t readSize = read(fd, buffer, 1);
+    ssize_t readSize = read(fd, buffer, 1);
     if (readSize != 1)
     {
-        printf("readSize(%zu) != 1\n, errno is %d\n", readSize, errno);
+        printf("readSize(%zd) != 1\n, errno is %d\n", readSize, errno);
     }
 
     printf("buffer[0] is %c, test %s\n", buffer[0], buffer[0] == 'a' ? "ok" : "failed");

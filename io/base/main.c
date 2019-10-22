@@ -13,8 +13,8 @@ int main(void)
 	if (fd == -1)
 		return -1;
 
-	size_t writeSize = write(fd, "abcd", 4);
-	printf("write size is %zu\n", writeSize);
+	ssize_t writeSize = write(fd, "abcd", 4);
+	printf("write size is %zd\n", writeSize);
 	lseek(fd, 0, SEEK_SET);
 
 	// intentional
@@ -26,11 +26,11 @@ int main(void)
 	// read size is 0, read char is 
 	// ...
 	char buffer;
-	for (size_t i = 0; i < writeSize + 3; i++)
+	for (ssize_t i = 0; i < writeSize + 3; i++)
 	{
 		buffer = 0;
-		size_t readSize = read(fd, &buffer, 1);
-		printf("read size is %zu, read char is %c\n", readSize, buffer);
+		ssize_t readSize = read(fd, &buffer, 1);
+		printf("read size is %zd, read char is %c\n", readSize, buffer);
 	}
 
 	close(fd);

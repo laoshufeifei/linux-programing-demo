@@ -85,10 +85,10 @@ int main(void)
 					printf("%.3f timer is ready\n", _getInterval());
 					char buffer[512];
 					// must read
-					size_t readSize = read(fd, buffer, sizeof(u_int64_t));
+					ssize_t readSize = read(fd, buffer, sizeof(u_int64_t));
 					if (readSize != sizeof(u_int64_t))
 					{
-						printf("readSize(%zu) != sizeof(u_int64_t)(%zu)\n", readSize, sizeof(u_int64_t));
+						printf("readSize(%zd) != sizeof(u_int64_t)(%zu)\n", readSize, sizeof(u_int64_t));
 						continue;
 					}
 

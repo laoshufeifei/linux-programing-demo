@@ -34,10 +34,10 @@ int main(void)
 	char ch;
 	while (true)
 	{
-		size_t readSize = read(fd, &ch, 1);
+		ssize_t readSize = read(fd, &ch, 1);
 		if (readSize != 1)
 		{
-			printf("error: read size is %zu\n", readSize);
+			printf("error: read size is %zd\n", readSize);
 			break;
 		}
 
