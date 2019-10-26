@@ -116,9 +116,17 @@ LIST
 </details>
 
 
-<details>
+<details open>
 <summary>thread <code>TODO</code></summary>
 
+- [x] pthread_create / pthread_once / pthread_detach / pthread_join
+- [x] pthread_cancel
+- [x] Thread-local storage / Thread-specific Data
+- [x] synchronization
+	- [x] mutex
+	- [x] condition
+	- [x] RW-Lock
+	- [x] spinlock
 </details>
 
 

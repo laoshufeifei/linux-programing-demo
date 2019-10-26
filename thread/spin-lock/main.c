@@ -5,6 +5,7 @@
 
 #include <pthread.h>
 
+// http://man7.org/linux/man-pages/man3/pthread_spin_lock.3.html
 static long counter = 0;
 static pthread_spinlock_t lock;
 
