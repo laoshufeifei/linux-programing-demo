@@ -4,33 +4,67 @@
 
 #include <pthread.h>
 
-void* _func(void* data)
+static void* _func(void* data)
 {
     long t = (long)data;
-    printf("\t in child thread: will sleep %ld s\n", t);
+    pthread_t tId = pthread_self();
+    printf("\t in %p thread: will sleep %ld s\n", (void*)tId, t);
     sleep(t);
+    printf("\t in %p thread: sleep finish, will return %ld\n", (void*)tId, t);
     return (void*)t;
 }
 
+static void _init(void)
+{
+    printf("at _init function, before sleep 1\n");
+    sleep(1);
+    printf("at _init function, after  sleep 1\n");
+}
+
+pthread_once_t once = PTHREAD_ONCE_INIT;
+
 int main(void)
 {
-    pthread_t thread;
-    int ret = pthread_create(&thread, NULL, _func, (void*)3);
+    int ret = 0;
+    ret = pthread_once(&once, _init);
     if (ret != 0)
     {
-        printf("pthread_cread failed, errno is %d\n", errno);
+        printf("pthread_init failed, ret is %d\n", ret);
         return -1;
     }
-    printf("create a thread\n");
 
-    void* retValue;
-    ret = pthread_join(thread, &retValue);
+    pthread_t thread1;
+    ret = pthread_create(&thread1, NULL, _func, (void*)3);
     if (ret != 0)
     {
-        printf("pthread_join failed, errno is %d\n", errno);
+        printf("pthread_cread failed, ret is %d\n", ret);
         return -1;
     }
-    printf("child thread return %ld\n", (long)retValue);
+
+    pthread_t thread2;
+    ret = pthread_create(&thread2, NULL, _func, (void*)5);
+    if (ret != 0)
+    {
+        printf("pthread_cread failed, ret is %d\n", ret);
+        return -1;
+    }
+
+    // if main thread exit, thread2 will exit also
+    ret = pthread_detach(thread2);
+    if (ret != 0)
+    {
+        printf("pthread_det failed, ret is %d\n", ret);
+        return -1;
+    }
+
+    void* threadRet;
+    ret = pthread_join(thread1, &threadRet);
+    if (ret != 0)
+    {
+        printf("pthread_join failed, ret is %d\n", ret);
+        return -1;
+    }
+    printf("child thread return %ld\n", (long)threadRet);
 
     return 0;
 }
