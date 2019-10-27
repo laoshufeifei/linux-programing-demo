@@ -6,5 +6,9 @@ io/*.txt
 a.out
 *.txt
 *.log
+*.a
 
 .vscode
+_build
+other/cmake/_build
+other/cmake/out
