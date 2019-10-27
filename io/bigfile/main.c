@@ -32,7 +32,7 @@ int main()
 	int fd = open("test.txt", O_CREAT | O_TRUNC | O_WRONLY, S_IRWXU | S_IRWXG | S_IROTH);
 	printf("fd is %d, errno is %d\n", fd, errno);
 
-	size_t totalSize = (size_t)1024 * 1024 * 1024 * 2 + 100;
+	int64 totalSize = (int64)1024 * 1024 * 1024 * 2 + 100;
 	const size_t bufferSize = 4096;
 	if (bufferSize > 0x7ffff000)
 	{
@@ -44,11 +44,11 @@ int main()
 	char* buffer = (char*)malloc(bufferSize);
 	memset(buffer, '1', bufferSize);
 
-	printf("totalSize  is %zu\n", totalSize);
+	printf("totalSize  is %lld\n", totalSize);
 	printf("bufferSize is %zu\n", bufferSize);
 
 	int64 i = 0;  // write time for log
-	size_t hadWrittenSize = 0;
+	int64 hadWrittenSize = 0;
 	bool hadError = false;
 	while (hadWrittenSize < totalSize)
 	{
@@ -59,7 +59,8 @@ int main()
 		ssize_t wroteSize = write(fd, buffer, needsWriteSize);
 		if (wroteSize != needsWriteSize)
 		{
-			printf("warning: %lld times: write %lld != %zu, errno is %d\n", i, (int64)wroteSize, bufferSize, errno);
+			printf("warning: %lld times: write %lld != %zu, errno is %d\n",
+				i, (int64)wroteSize, bufferSize, errno);
 		}
 		hadWrittenSize += wroteSize;
 
@@ -67,7 +68,8 @@ int main()
 		if (offSet != hadWrittenSize)
 		{
 			hadError = true;
-			printf("error: %lld times: lseek had error(%lld != %zu), errno is %d\n", i, offSet, hadWrittenSize, errno);
+			printf("error: %lld times: lseek had error(%lld != %lld), errno is %d\n",
+				i, offSet, hadWrittenSize, errno);
 		}
 
 		// 27: EFBIG           File too large

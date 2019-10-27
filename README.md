@@ -117,7 +117,7 @@ LIST
 
 
 <details open>
-<summary>thread <code>TODO</code></summary>
+<summary>thread </summary>
 
 - [x] pthread_create / pthread_once / pthread_detach / pthread_join
 - [x] pthread_cancel
@@ -131,9 +131,8 @@ LIST
 
 
 <details>
-<summary>other <code>TODO</code></summary>
+<summary>other </summary>
 
-- [ ] cmake
-- [ ] libc IO
-- [ ] cpp11 thread
+- [x] cmake
+- [x] libc IO
 </details>
