@@ -131,9 +131,8 @@ LIST
 
 
 <details>
-<summary>other <code>TODO</code></summary>
+<summary>other </summary>
 
-- [ ] cmake
-- [ ] libc IO
-- [ ] cpp11 thread
+- [x] cmake
+- [x] libc IO
 </details>
