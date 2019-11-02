@@ -95,7 +95,7 @@ LIST
 <summary>memory </summary>
 
 - [x] basic
-	- [x] alloca / malloc / free
+	- [x] alloc / malloc / free
 	- [x] sbrk
 	- [x] memalign / posix_memalign
 - [x] map file (shared or private)
