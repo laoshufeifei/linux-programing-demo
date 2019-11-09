@@ -1,9 +1,27 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+#include <signal.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <netdb.h>
+
 #include "common.h"
 
 const size_t g_buffSize = 64;
 
 int main(int argc, char* argv[])
 {
+    if (argc < 2 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)
+    {
+        printf("usage: %s port\n", argv[0]);
+        exit(EXIT_SUCCESS);
+    }
+    const char* portStr = argv[1];
+
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
     printf("Current working dir: %s\n", cwd);
@@ -18,7 +36,7 @@ int main(int argc, char* argv[])
     hints.ai_flags = AI_PASSIVE | AI_NUMERICSERV;
 
     struct addrinfo* result;
-    int ret = getaddrinfo(NULL, g_portStr, &hints, &result);
+    int ret = getaddrinfo(NULL, portStr, &hints, &result);
     if (ret != 0)
         fatalError("get addr info error");
 

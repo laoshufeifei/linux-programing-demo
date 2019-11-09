@@ -11,7 +11,6 @@
 #define BACKLOG 5
 
 const size_t g_buffSize = 64;
-const int g_port = 20000;
 
 static void fatalError(const char* msg)
 {
@@ -19,8 +18,21 @@ static void fatalError(const char* msg)
     exit(1);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc < 2 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)
+    {
+        printf("usage: %s port\n", argv[0]);
+        exit(EXIT_SUCCESS);
+    }
+
+    int port = atoi(argv[1]);
+    if (port <= 0)
+    {
+        printf("port number(%s) is illegal\n", argv[1]);
+        exit(EXIT_FAILURE);
+    }
+
     int sfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sfd == -1)
         fatalError("sfd == -1");
@@ -30,7 +42,7 @@ int main()
     memset(&svrAddr, 0, sockLenth);
     svrAddr.sin_family = AF_INET;
     svrAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    svrAddr.sin_port = htons(g_port);
+    svrAddr.sin_port = htons(port);
 
     int ret = bind(sfd, (struct sockaddr*)&svrAddr, sockLenth);
     if (ret == -1)

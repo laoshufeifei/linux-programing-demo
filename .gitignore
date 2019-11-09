@@ -1,12 +1,10 @@
-*/server
-*/client
-*/a.out
-io/*.txt
-
+server
+client
 a.out
+
+*.a
 *.txt
 *.log
-*.a
 
 .vscode
 _build
