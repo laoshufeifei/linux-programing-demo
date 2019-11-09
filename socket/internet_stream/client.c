@@ -1,14 +1,27 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+#include <signal.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <netdb.h>
+
 #include "common.h"
 
 const size_t g_buffSize = 64;
 
 int main(int argc, char *argv[])
 {
-    if (argc < 2 || strcmp(argv[1], "--help") == 0)
+    if (argc < 4 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)
     {
-        printf("%s server-host msg...\n", argv[0]);
-        exit(1);
+        printf("usage: %s host port msg\n", argv[0]);
+        exit(EXIT_SUCCESS);
     }
+    const char* host = argv[1];
+    const char* portStr = argv[2];
 
     struct addrinfo hints;
     memset(&hints, 0, sizeof(struct addrinfo));
@@ -17,7 +30,7 @@ int main(int argc, char *argv[])
     hints.ai_flags = AI_NUMERICSERV;
 
     struct addrinfo* result;
-    if (getaddrinfo(argv[1], g_portStr, &hints, &result) != 0)
+    if (getaddrinfo(host, portStr, &hints, &result) != 0)
     {
         fatalError("get addr info error");
     }
@@ -52,8 +65,8 @@ int main(int argc, char *argv[])
     // if (ret == 0)
     //     printf("client is %s:%s\n", host, service);
 
-    size_t msgLen = strlen(argv[2]);
-    if (write(cfd, argv[2], msgLen) != msgLen)
+    size_t msgLen = strlen(argv[3]);
+    if (write(cfd, argv[3], msgLen) != msgLen)
         fatalError("write size != msg length");
     if (write(cfd, "\n", 1) != 1)
         fatalError("write size != msg length");
