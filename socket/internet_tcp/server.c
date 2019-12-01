@@ -22,10 +22,6 @@ int main(int argc, char* argv[])
     }
     const char* portStr = argv[1];
 
-    char cwd[1024];
-    getcwd(cwd, sizeof(cwd));
-    printf("Current working dir: %s\n", cwd);
-
     if (signal(SIGPIPE, SIG_IGN) == SIG_ERR)
         fatalError("signal ignore error");
 
