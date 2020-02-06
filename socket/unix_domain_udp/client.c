@@ -58,5 +58,6 @@ int main(int argc, char* argv[])
     }
 
     remove(cltAddr.sun_path);
+    close(sfd);
     exit(EXIT_SUCCESS);
 }

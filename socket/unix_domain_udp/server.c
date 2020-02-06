@@ -51,5 +51,6 @@ int main()
             fatalError("sendto had error");
     }
 
+    close(sfd);
     return 0;
 }

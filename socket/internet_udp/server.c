@@ -74,4 +74,6 @@ int main(int argc, char *argv[])
             fatalError("send error");
         }
     }
+
+    close(sfd);
 }

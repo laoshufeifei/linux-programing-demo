@@ -65,5 +65,6 @@ int main()
             fatalError("close error");
     }
 
+    close(sfd);
     return 0;
 }
