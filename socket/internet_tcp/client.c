@@ -77,5 +77,7 @@ int main(int argc, char *argv[])
         fatalError("read line had error");
 
     printf("read buffer from server: %d [%s]\n", (int)readSize, buffer);
+
+    close(cfd);
     return 0;
 }

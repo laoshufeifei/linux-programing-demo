@@ -58,5 +58,6 @@ int main(int argc, char *argv[])
         printf("response %d: %.*s\n", i - 1, (int)recvSize, buffer);
     }
 
+    close(sfd);
     exit(EXIT_SUCCESS);
 }

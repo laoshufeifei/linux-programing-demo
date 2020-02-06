@@ -45,5 +45,6 @@ int main()
     if (readSize == -1)
         fatalError("readSize == -1");
 
+    close(sfd);
     exit(EXIT_SUCCESS);
 }
