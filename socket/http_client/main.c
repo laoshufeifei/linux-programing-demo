@@ -47,7 +47,12 @@ int main(int argc, char *argv[])
             continue;
 
         if (connect(fd, rp->ai_addr, rp->ai_addrlen) != -1)
+        {
+            char ip[512], port[512];
+            getnameinfo(rp->ai_addr, rp->ai_addrlen, ip, 512, port, 512, NI_NUMERICSERV);
+            printf("resolved ip is %s, port is %s\n", ip, port);
             break;
+        }
 
         printf("connect failed\n");
         close(fd);
