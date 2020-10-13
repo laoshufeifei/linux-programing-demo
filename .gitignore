@@ -10,3 +10,5 @@ a.out
 _build
 other/cmake/_build
 other/cmake/out
+
+main
