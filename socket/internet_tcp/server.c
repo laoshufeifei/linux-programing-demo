@@ -66,17 +66,17 @@ int main(int argc, char* argv[])
 
     struct sockaddr localAddr;
     socklen_t addrLen1 = sizeof(struct sockaddr);
-    int ret1 = getsockname(lfd, &localAddr, &addrLen1);
+    ret = getsockname(lfd, &localAddr, &addrLen1);
     char host1[NI_MAXHOST];
     char service1[NI_MAXSERV];
-    ret1 = getnameinfo((struct sockaddr*)&localAddr, addrLen1, host1, NI_MAXHOST, service1, NI_MAXSERV, 0);
+    ret = getnameinfo((struct sockaddr*)&localAddr, addrLen1, host1, NI_MAXHOST, service1, NI_MAXSERV, 0);
     if (ret == 0)
         printf("server socket is %s:%s\n", host1, service1);
 
 
 
     socklen_t addrLen = sizeof(struct sockaddr_storage);
-    int cltFd = 0;
+    int cltFd = 0; // client Fd
     struct sockaddr_in cltAddr;
     char host[NI_MAXHOST];
     char service[NI_MAXSERV];
